@@ -1,0 +1,49 @@
+<div ng-controller = "eventsController">
+	<h2>Scheduled Events</h2>
+	<table class = "table table-stripped">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Title</th>
+				<th>Description</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat = "e in events track by $index">
+				<td>{{e.eventDate}}</td>
+				<td>{{e.title}}</td>
+				<td>{{e.desc}}</td>
+				<td><a class = "btn btn-primary" ng-click="editEvent($index)">Edit</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<tr>
+	<h2>{{today |date: format: "MMMM"}} </h2>
+	<div id ="cal">
+		<div class = "dayHeading" ng-repeat="d in days">	{{d}}
+		</div>
+		<div class = "week" ng-repeat ="row in cal track by $index">
+			<div class = "day" ng-repeat ="col in row track by $index" ng-click="sel(col)">
+				{{col}} 
+			</div>	
+		</div>	
+	</div>
+	<div id ="addEvent" ng-if="add == true">
+		<h3>Add Event</h3><br>
+		<strong>{{selectedDate}}</strong><br>
+		<input type ="hidden" ng-value="eventDet.eventDate =selectedDate"> 
+		Title: <input type ="text" ng-model="eventDet.title"> 
+		<br><br>
+		Description: <input type ="text" ng-model="eventDet.desc"> <br>
+		<button type="button" class="btn btn-success" ng-click="createEvent()"> Create </button>
+	</div>
+	<div id ="addEvent" ng-if="edit == true">
+		<h3>Edit Event</h3><br>
+		<strong>{{selectedDate}}</strong><br>
+		<input type ="hidden" ng-value="eventDet.eventDate =selectedDate"> 
+		Title: <input type ="text" ng-model="eventDet.title"> <br>
+		Description: <input type ="text" ng-model="eventDet.desc"> <br>
+		<button type="button" class="btn btn-success" ng-click="updateEvent(id)">Edit</button>
+	</div>
+</div>
