@@ -41,7 +41,7 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
 
     	for(var i = 0; i<calInterface.length; i++){
     		for(var j = startIdx; (j<calInterface[i].length) && ((i*6+j)<=lastDay); j++){
-    			calInterface[i][j] = i*6+j;
+    			calInterface[i][j] = { day:(i*6+j), events:[]};
     		}
     		startIdx=0;
     	}
@@ -109,25 +109,33 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
 		// });
 	}
 	factory.show = function(meet,callback){
+        var info;
+        for(var i =0 ; i<events.length; i++){
+            if (i == meet){
+                info = events[i]
+            }
+        }
+        callback(info);
 		// $http.get("/event/"+ meet).success(
 		// 	function(eventInfo){
 		// 		callback(eventInfo)
 		// })
 	}
 	factory.update = function(id, newData,callback){
-		console.log(newData);
+		console.log(newData, "update", id);
 		for(var i =0; i< events.length; i++){
 			if(i == id){
 				events[i]= newData;
 			}
 		}
+        // console.log(events)
 		callback(events);
 		// $http.post("/update/" + eventId).success(function(){
 		// 	// callback()
 		// })
 	}
 	factory.index = function(callback){
-		console.log(calInterface)
+		// console.log(calInterface)
 		callback(calInterface, weekDays,date,m+1,y,events);
 	}
 	return factory;
