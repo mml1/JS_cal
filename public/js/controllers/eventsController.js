@@ -7,6 +7,7 @@ angular.module("eventsCtrl",[]).controller("eventsController", function($scope, 
 	$scope.eventDet = {};
 	$scope.eventInfo = {}; 
 	$scope.events = [];
+	$scope.sel;
 	
 	// Make the calendar
 	EventFactory.index(function(info,days,date,m,y,e){
@@ -21,8 +22,9 @@ angular.module("eventsCtrl",[]).controller("eventsController", function($scope, 
 	// select the date
 	$scope.sel =function(id){
 		console.log(id,"controller")
-		$scope.add=true;
-		$scope.selectedDate = $scope.month + "/" + id.day 
+		$scope.add = true;
+		$scope.sel = id;
+		$scope.selectedDate = $scope.month + "/" + $scope.sel.day 
 	}
 
 	//Create the event
@@ -56,6 +58,7 @@ angular.module("eventsCtrl",[]).controller("eventsController", function($scope, 
 	}
 
 	/* TO DO
+		-why is clicking on another event broken now?
 		-display the events on the calendar
 		-use backend server to save events
 		-put arrows to go through other months

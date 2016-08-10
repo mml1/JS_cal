@@ -14,7 +14,7 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
 	];
 
 	//Today's date
-	var date = new Date();
+    var date = new Date();
     var d = date.getDate();
     var y = date.getFullYear();
     var m = date.getMonth();
@@ -28,8 +28,8 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
     	calInterface[0][0] = 1;
     	startIdx = 0;
     	for(var i = 0; i<calInterface.length; i++){
-    		for(var j = startIdx; j<calInterface[i].length && (i*6+j)<=lastDay; j++){
-    			calInterface[i][j] = i*6+j;
+    		for(var j = startIdx; j<calInterface[i].length && (i*7+j)<=lastDay; j++){
+    			calInterface[i][j] = i*7+j;
     		}
     		startIdx=0;
     	}
@@ -40,8 +40,8 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
     	startIdx = 1;
 
     	for(var i = 0; i<calInterface.length; i++){
-    		for(var j = startIdx; (j<calInterface[i].length) && ((i*6+j)<=lastDay); j++){
-    			calInterface[i][j] = { day:(i*6+j), events:[]};
+    		for(var j = startIdx; (j<calInterface[i].length) && ((i*7+j)<=lastDay); j++){
+    			calInterface[i][j] = { day:(i*7+j), events:[]};
     		}
     		startIdx=0;
     	}
@@ -50,8 +50,8 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
     	calInterface[0][2]= 1;
     	startIdx = 2;
     	for(var i = 0; i<calInterface.length; i++){
-    		for(var j = startIdx; j<calInterface[i].length && (i*6+j)<=lastDay; j++){
-    			calInterface[i][j] = i*6+j ;
+    		for(var j = startIdx; j<calInterface[i].length && (i*7+j)<=lastDay; j++){
+    			calInterface[i][j] = i*7+j ;
     		}
     		startIdx=0;
     	}
@@ -60,8 +60,8 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
     	calInterface[0][3]= 1;
     	startIdx = 3;
     	for(var i = 0; i<calInterface.length; i++){
-    		for(var j = startIdx; j<calInterface[i].length && (i*6+j)<=lastDay; j++){
-    			calInterface[i][j] = i*6+j ;
+    		for(var j = startIdx; j<calInterface[i].length && (i*7+j)<=lastDay; j++){
+    			calInterface[i][j] = i*7+j ;
     		}
     		startIdx=0;
     	}
@@ -70,8 +70,8 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
     	calInterface[0][4]= 1;
     	startIdx = 4;
     	for(var i = 0; i<calInterface.length; i++){
-    		for(var j = startIdx; j<calInterface[i].length && (i*6+j)<=lastDay; j++){
-    			calInterface[i][j] = i*6+j ;
+    		for(var j = startIdx; j<calInterface[i].length && (i*7+j)<=lastDay; j++){
+    			calInterface[i][j] = i*7+j ;
     		}
     		startIdx=0;
     	}
@@ -80,8 +80,8 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
     	calInterface[0][5]= 1;
     	startIdx = 5;
     	for(var i = 0; i<calInterface.length; i++){
-    		for(var j = startIdx; j<calInterface[i].length && (i*6+j)<=lastDay; j++){
-    			calInterface[i][j] = i*6+j ;
+    		for(var j = startIdx; j<calInterface[i].length && (i*7+j)<=lastDay; j++){
+    			calInterface[i][j] = i*7+j ;
     		}
     		startIdx=0;
     	}
@@ -90,8 +90,8 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
     	calInterface[0][6]= 1;
     	startIdx = 6;
     	for(var i = 0; i<calInterface.length; i++){
-    		for(var j = startIdx; j<calInterface[i].length && (i*6+j)<=lastDay; j++){
-    			calInterface[i][j] = i*6+j ;
+    		for(var j = startIdx; j<calInterface[i].length && (i*7+j)<=lastDay; j++){
+    			calInterface[i][j] = i*7+j ;
     		}
     		startIdx=0;
     	}
@@ -99,8 +99,17 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
 
 	factory.create = function(meet, callback){
 		console.log("in fact", meet);
-		//Need to give each event an id
 		events.push(meet);	
+        for(var i =0; i < calInterface.length;i++){
+            for(var j = 0; j < calInterface[i].length; j++){
+                if(calInterface[i][j]!=null){
+                    if(calInterface[i][j].day == meet.day){
+                        calInterface[i][j].events.push(meet);
+                    }   
+                }
+
+            }
+        }
 		callback();
 
 
@@ -128,6 +137,17 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
 				events[i]= newData;
 			}
 		}
+        // need to update the update function, currently adding change RETURN HERE
+        for(var i =0; i < calInterface.length;i++){
+            for(var j = 0; j < calInterface[i].length; j++){
+                if(calInterface[i][j]!=null){
+                    if(calInterface[i][j].day == newData.day){
+                        calInterface[i][j].events.push(newData);
+                    }   
+                }
+
+            }
+        }
         // console.log(events)
 		callback(events);
 		// $http.post("/update/" + eventId).success(function(){

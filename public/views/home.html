@@ -25,14 +25,17 @@
 		</div>
 		<div class = "week" ng-repeat ="row in cal track by $index">
 			<div class = "day" ng-repeat ="col in row track by $index" ng-click="sel(col)">
-				{{col.day}} {{col.events}}
+				{{col.day}} 
+				<div ng-repeat= "e in col.events">{{e.title}}
+				</div>
 			</div>	
 		</div>	
 	</div>
 	<div id ="addEvent" ng-if="add == true">
 		<h3>Add Event</h3><br>
 		<strong>{{selectedDate}}</strong><br>
-		<input type ="hidden" ng-value="eventDet.eventDate =selectedDate"> 
+		<input type ="hidden" ng-value="eventDet.eventDate =selectedDate">
+		<input type ="hidden" ng-value="eventDet.day = sel.day">
 		Title: <input type ="text" ng-model="eventDet.title"> 
 		<br><br>
 		Description: <input type ="text" ng-model="eventDet.desc"> <br>
@@ -41,7 +44,8 @@
 	<div id ="addEvent" ng-if="edit == true">
 		<h3>Edit Event</h3><br>
 		<strong>{{eventInfo.eventDate}}</strong><br>
-		<input type ="hidden" ng-value="eventDet.eventDate = eventInfo.eventDate"> 
+		<input type ="hidden" ng-value="eventDet.day = eventInfo.day">
+		<input type ="hidden" ng-value="eventDet.eventDate = eventInfo.eventDate">  
 		Title: <input type ="text" ng-model="eventDet.title" ng-value ="eventInfo.title"> <br>
 		Description: <input type ="text"  ng-model="eventDet.desc" ng-value ="eventInfo.desc"> <br>
 		<button type="button" class="btn btn-success" ng-click="updateEvent(id)">Edit</button>
