@@ -14,40 +14,66 @@
 				<td>{{e.eventDate}}</td>
 				<td>{{e.title}}</td>
 				<td>{{e.desc}}</td>
-				<td><a class = "btn btn-primary" ng-click="editEvent($index)">Edit</a></td>
+				<td><a class = "btn btn-primary" ng-click="editEvent(e._id)">Edit</a></td>
 			</tr>
 		</tbody>
 	</table>
 	<tr>
-	<h2>{{today |date: format: "MMMM"}} </h2>
-	<div id ="cal">
-		<div class = "dayHeading" ng-repeat="d in days">	{{d}}
-		</div>
-		<div class = "week" ng-repeat ="row in cal track by $index">
-			<div class = "day" ng-repeat ="col in row track by $index" ng-click="sel(col)">
-				{{col.day}} 
-				<div ng-repeat= "e in col.events">{{e.title}}
-				</div>
-			</div>	
-		</div>	
-	</div>
-	<div id ="addEvent" ng-if="add == true">
+
+	<div class ="eventBox">
 		<h3>Add Event</h3><br>
-		<strong>{{selectedDate}}</strong><br>
-		<input type ="hidden" ng-value="eventDet.eventDate =selectedDate">
-		<input type ="hidden" ng-value="eventDet.day = sel.day">
-		Title: <input type ="text" ng-model="eventDet.title"> 
-		<br><br>
-		Description: <input type ="text" ng-model="eventDet.desc"> <br>
-		<button type="button" class="btn btn-success" ng-click="createEvent()"> Create </button>
+		<form class = "form-horizontal">
+			<div class = "form-group">
+				<label class ="control-label col-sm-4">Date:</label> 
+				<div class = "col-sm-8">
+					<input type ="date" ng-model="eventDet.eventDate"> 
+				</div>
+			</div>
+			<div class = "form-group">
+				<label class ="control-label col-sm-4">Title:</label> 
+				<div class = "col-sm-8">
+					<input type ="text" ng-model="eventDet.title"> 
+				</div>
+			</div>
+			<div class = "form-group">
+				<label class ="control-label col-sm-4">Description:</label> 
+				<div class = "col-sm-8">
+					<input type ="text" ng-model="eventDet.desc"> 
+				</div>
+			</div>
+			<div class="form-group"> 
+				<div class="col-sm-offset-8">
+					<button type="submit" class="btn btn-success" ng-click="createEvent()"> Create </button>
+				</div>
+			</div>
+		</form>
 	</div>
-	<div id ="addEvent" ng-if="edit == true">
+	<div class ="eventBox" ng-if="edit==true">
 		<h3>Edit Event</h3><br>
-		<strong>{{eventInfo.eventDate}}</strong><br>
-		<input type ="hidden" ng-value="eventDet.day = eventInfo.day">
-		<input type ="hidden" ng-value="eventDet.eventDate = eventInfo.eventDate">  
-		Title: <input type ="text" ng-model="eventDet.title" ng-value ="eventInfo.title"> <br>
-		Description: <input type ="text"  ng-model="eventDet.desc" ng-value ="eventInfo.desc"> <br>
-		<button type="button" class="btn btn-success" ng-click="updateEvent(id)">Edit</button>
+		<form class = "form-horizontal">
+			<div class = "form-group">
+				<label class ="control-label col-sm-4">Date:</label> 
+				<div class = "col-sm-8">
+					<input type ="date" ng-model="eventDet.date" ng-value ="eventInfo.date"> 
+				</div>
+			</div>
+			<div class = "form-group">
+				<label class ="control-label col-sm-4">Title:</label> 
+				<div class = "col-sm-8">
+					<input type ="text" ng-model="eventDet.title" ng-value ="eventInfo.title"> 
+				</div>
+			</div>
+			<div class = "form-group">
+				<label class ="control-label col-sm-4">Description:</label> 
+				<div class = "col-sm-8">
+					<input type ="text" ng-model="eventDet.desc" ng-value ="eventInfo.desc"> 
+				</div>
+			</div>
+			<div class="form-group"> 
+				<div class="col-sm-offset-8">
+					<button type="submit" class="btn btn-success" ng-click="updateEvent(id)"> Edit </button>
+				</div>
+			</div>
+		</form>
 	</div>
 </div>

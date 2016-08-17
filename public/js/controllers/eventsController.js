@@ -2,7 +2,7 @@ angular.module("eventsCtrl",[]).controller("eventsController", function($scope, 
 	$scope.cal = [];
 	$scope.days;
 	$scope.month;
-	$scope.add = false;
+	// $scope.add = false;
 	$scope.edit = false;
 	$scope.eventDet = {};
 	$scope.eventInfo = {}; 
@@ -10,30 +10,23 @@ angular.module("eventsCtrl",[]).controller("eventsController", function($scope, 
 	$scope.sel;
 	
 	// Make the calendar
-	EventFactory.index(function(info,days,date,m,y,e){
-		// console.log(info, "f∂")
-		$scope.cal = info;
-		$scope.days = days;
-		$scope.month = m;
-		$scope.today = date;
-		$scope.year = y;
-		$scope.events = e;
+	EventFactory.index(function(info){
+		$scope.events = info;
 	})
 	// select the date
-	$scope.sel =function(id){
-		console.log(id,"controller")
-		$scope.add = true;
-		$scope.sel = id;
-		$scope.selectedDate = $scope.month + "/" + $scope.sel.day 
-	}
+	// $scope.sel =function(id){
+	// 	console.log(id,"controller")
+	// 	$scope.add = true;
+	// 	$scope.sel = id;
+	// 	$scope.selectedDate = $scope.month + "/" + $scope.sel.day 
+	// }
 
 	//Create the event
 	$scope.createEvent =function(){
-		// console.log($scope.eventDet, "test")
+		console.log("in controller")
 		EventFactory.create($scope.eventDet, function(){
-			$scope.eventDet = {}
-			$scope.add=false;
-		} )
+			$scope.eventDet = {};
+		});
 
 	}
 	
@@ -43,25 +36,18 @@ angular.module("eventsCtrl",[]).controller("eventsController", function($scope, 
 			$scope.events = events;
 		});
 		$scope.eventDet = {};
-		$scope.edit = false;
 
 	}
 	$scope.editEvent = function(id){
-		$scope.edit = true;
 		$scope.id = id;
-		
+		$scope.edit = true;
+
+		console.log(id);
 		//Get event info
 		EventFactory.show(id,function(info){
 			$scope.eventInfo = info;
 		} )
 
 	}
-
-	/* TO DO
-		-why is clicking on another event broken now?
-		-display the events on the calendar
-		-use backend server to save events
-		-put arrows to go through other months
-	*/
 
 });

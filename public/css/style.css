@@ -3,9 +3,8 @@
 	display: inline-block;
 	width: 70%;
 }
-#addEvent{
+.eventBox{
 	display: inline-block;
-	min-width: 20%;
 	border: 1px solid black;
 	min-height: 100px;
 	vertical-align: top;
