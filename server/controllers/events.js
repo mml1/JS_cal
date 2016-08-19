@@ -4,16 +4,13 @@ var Event = mongoose.model("Event");
 module.exports = (function(){
 	return {
 		index: function(req, res){
-			console.log("here")
 			Event.find({}, function(err, eventsInfo){
 				if(err){
 					console.log("db is empty")
 				} else {
-					console.log(eventsInfo)
 					res.json(eventsInfo);
 				}
 			});
-
 		}, 
 		show: function(req, res){
 			console.log("here")
@@ -40,6 +37,14 @@ module.exports = (function(){
 
 		}, 
 		update: function(req, res){
+			console.log(req.body)
+			Event.findOneAndUpdate({_id:req.params.id}, req.body, function(err){
+				if(err){
+					console.log("not able to update")
+				} else {
+					res.json({message:"success"})
+				}
+			})
 			
 		}
 

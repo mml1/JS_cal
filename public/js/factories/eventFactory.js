@@ -14,15 +14,14 @@ angular.module("eventFactory",[]).factory("EventFactory", function($http){
     }
     factory.update = function(id, newData, callback){
         console.log(newData, "update", id);
-        $http.post("/update/" + id).success(function(){
-            callback(events)
+        $http.post("/update/" + id, newData).success(function(message){
+            callback();
         })
     }   
     factory.index = function(callback){
-        $http.get("/index").success(
-            function(dbInfo){
-                callback(dbInfo)
-            })
-        }
+        $http.get("/index").success(function(dbInfo){
+            callback(dbInfo);
+        })
+    }
     return factory;
 });
